@@ -110,17 +110,16 @@ public:
         : left(NULL)
         , right(NULL)
     {
+        if (leftextent == 0 && rightextent == 0) {
+            // sort intervals by start
+            IntervalStartSorter<T,K> intervalStartSorter;
+            sort(ivals.begin(), ivals.end(), intervalStartSorter);
+        }
 
         --depth;
         if (depth == 0 || (ivals.size() < minbucket && ivals.size() < maxbucket)) {
             intervals = ivals;
         } else {
-            if (leftextent == 0 && rightextent == 0) {
-                // sort intervals by start
-                IntervalStartSorter<T,K> intervalStartSorter;
-                sort(ivals.begin(), ivals.end(), intervalStartSorter);
-            }
-
             int leftp = 0;
             int rightp = 0;
             int centerp = 0;
